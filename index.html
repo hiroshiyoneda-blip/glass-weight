@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ガラス重量計算</title>
+<style>
+body{
+    font-family: sans-serif;
+    margin:40px;
+}
+input, select, button{
+    font-size:16px;
+    padding:5px;
+    margin:5px;
+}
+#result{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<h2>ガラス重量計算</h2>
+
+<label>ガラス種類</label><br>
+<select id="kind">
+    <option value="7">FL3（7kg/㎡）</option>
+    <option value="12">FL5（12kg/㎡）</option>
+    <option value="17">6.8（17kg/㎡）</option>
+</select>
+
+<br><br>
+
+<label>幅(mm)</label><br>
+<input type="number" id="width">
+
+<br><br>
+
+<label>高さ(mm)</label><br>
+<input type="number" id="height">
+
+<br><br>
+
+<button onclick="calc()">計算</button>
+
+<div id="result"></div>
+
+<script>
+function calc(){
+
+    const weightPerM2 = Number(document.getElementById("kind").value);
+    const kindName = document.getElementById("kind").options[
+        document.getElementById("kind").selectedIndex
+    ].text;
+
+    const width = Number(document.getElementById("width").value);
+    const height = Number(document.getElementById("height").value);
+
+    if(width <= 0 || height <= 0){
+        alert("幅と高さを入力してください。");
+        return;
+    }
+
+    const area = (width / 1000) * (height / 1000);
+    const weight = area * weightPerM2;
+    const price = weight * 150;
+
+    document.getElementById("result").innerHTML =
+        "<h3>計算結果</h3>" +
+        "ガラス種類：" + kindName + "<br>" +
+        "面積：" + area.toFixed(3) + " ㎡<br>" +
+        "重量：" + weight.toFixed(2) + " kg<br>" +
+        "廃棄価格：" + Math.round(price).toLocaleString() + " 円";
+}
+</script>
+
+</body>
+</html>
