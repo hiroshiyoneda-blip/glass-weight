@@ -2,48 +2,84 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ガラス重量計算</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ガラス重量・廃棄価格計算</title>
+
 <style>
 body{
     font-family: sans-serif;
-    margin:40px;
+    margin:20px;
+    max-width:500px;
+    margin-left:auto;
+    margin-right:auto;
+    line-height:1.6;
 }
-input, select, button{
-    font-size:16px;
-    padding:5px;
-    margin:5px;
+
+h2{
+    text-align:center;
+    font-size:30px;
+    margin-bottom:25px;
 }
-#result{
-    margin-top:20px;
-    font-size:18px;
+
+label{
+    font-size:20px;
     font-weight:bold;
 }
+
+input,
+select,
+button{
+    width:100%;
+    font-size:22px;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:20px;
+    box-sizing:border-box;
+}
+
+button{
+    background:#007AFF;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#005FCC;
+}
+
+#result{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.8;
+    border-top:1px solid #ccc;
+    padding-top:20px;
+}
 </style>
+
 </head>
+
 <body>
 
-<h2>ガラス重量計算</h2>
+<h2>ガラス重量・廃棄価格計算</h2>
 
-<label>ガラス種類</label><br>
+<label>ガラス種類</label>
 <select id="kind">
     <option value="7">FL3（7kg/㎡）</option>
     <option value="12">FL5（12kg/㎡）</option>
     <option value="17">6.8（17kg/㎡）</option>
 </select>
 
-<br><br>
+<label>幅（mm）</label>
+<input type="number" id="width" placeholder="例：900">
 
-<label>幅(mm)</label><br>
-<input type="number" id="width">
+<label>高さ（mm）</label>
+<input type="number" id="height" placeholder="例：1800">
 
-<br><br>
-
-<label>高さ(mm)</label><br>
-<input type="number" id="height">
-
-<br><br>
-
-<button onclick="calc()">計算</button>
+<button onclick="calc()">計算する</button>
 
 <div id="result"></div>
 
@@ -51,9 +87,9 @@ input, select, button{
 function calc(){
 
     const weightPerM2 = Number(document.getElementById("kind").value);
-    const kindName = document.getElementById("kind").options[
-        document.getElementById("kind").selectedIndex
-    ].text;
+    const kindName =
+        document.getElementById("kind").options[
+        document.getElementById("kind").selectedIndex].text;
 
     const width = Number(document.getElementById("width").value);
     const height = Number(document.getElementById("height").value);
@@ -69,7 +105,7 @@ function calc(){
 
     document.getElementById("result").innerHTML =
         "<h3>計算結果</h3>" +
-        "ガラス種類：" + kindName + "<br>" +
+        "ガラス種類：<b>" + kindName + "</b><br>" +
         "面積：" + area.toFixed(3) + " ㎡<br>" +
         "重量：" + weight.toFixed(2) + " kg<br>" +
         "廃棄価格：" + Math.round(price).toLocaleString() + " 円";
